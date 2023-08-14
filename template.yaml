@@ -1,0 +1,111 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: A tamplate to install squid on 5 ec2 servers
+Resources:
+  MySecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Security group for EC2 instances
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 3128
+          ToPort: 3128
+  EC2Instance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-024e6efaf93d85776
+      InstanceType: t2.micro
+      KeyName: KeyName
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y squid
+          sed -i 's/http_access deny all/http_access allow all/g' /etc/squid/squid.conf
+          systemctl restart squid.service
+
+  EC2Instance2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-024e6efaf93d85776
+      InstanceType: t2.micro
+      KeyName: KeyName
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y squid
+          sed -i 's/http_access deny all/http_access allow all/g' /etc/squid/squid.conf
+          systemctl restart squid.service
+
+  EC2Instance3:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-024e6efaf93d85776
+      InstanceType: t2.micro
+      KeyName: KeyName
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y squid
+          sed -i 's/http_access deny all/http_access allow all/g' /etc/squid/squid.conf
+          systemctl restart squid.service
+
+  EC2Instance4:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-024e6efaf93d85776
+      InstanceType: t2.micro
+      KeyName: KeyName
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y squid
+          sed -i 's/http_access deny all/http_access allow all/g' /etc/squid/squid.conf
+          systemctl restart squid.service
+
+  EC2Instance5:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-024e6efaf93d85776
+      InstanceType: t2.micro
+      KeyName: KeyName
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install -y squid
+          sed -i 's/http_access deny all/http_access allow all/g' /etc/squid/squid.conf
+          systemctl restart squid.service
+
+Outputs:
+  PublicIp1:
+    Value: !GetAtt EC2Instance1.PublicIp
+
+  PublicIp2:
+    Value: !GetAtt EC2Instance2.PublicIp
+
+  PublicIp3:
+    Value: !GetAtt EC2Instance3.PublicIp
+
+  PublicIp4:
+    Value: !GetAtt EC2Instance4.PublicIp
+
+  PublicIp5:
+    Value: !GetAtt EC2Instance5.PublicIp
